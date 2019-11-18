@@ -3,16 +3,30 @@ var fs = require('fs')
 var https = require('https')
 var path = require('path')
 var router = express.Router();
+var cors = require('cors')
 let app = express()
+
+app.use(cors())
 
 var post = require('./post.js')
 
+/*app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ }); */
 
 const pug = require('pug');
 
+app.use("/js", express.static(__dirname + "/js"));
+app.use("/node_modules", express.static(__dirname + "/js"));
+app.use("/static", express.static(__dirname + "/static"));
+
 app.set("view engine", "pug");
 
-app.set("views", path.join(__dirname, "views"));
+//app.set("views", path.join(__dirname, "views"));
+
+
 //app.use(express.static((__dirname, 'public')));
 
 /*app.get('/', function (req, res) {
