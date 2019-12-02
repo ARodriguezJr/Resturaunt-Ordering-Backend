@@ -37,13 +37,14 @@ app.use(bodyParser.urlencoded({
 app.post('/incomingOrder', function(req, res) {
   var item = req.body.item;
   var quantity = req.body.quantity;
-  fs.writeFile("orders/adminorders.txt", item + " #" + quantity, (err) => {
+  var price = req.body.price;
+  fs.appendFile("orders/adminorders.txt", item + " #" + quantity + " $" + price, (err) => {
     if(err) throw err;
 
     console.log("Order saved!");
   });
 
-  res.send(item + ' ' + quantity);
+  res.send(item + ' ' + quantity + ' ' + price);
 }); 
 
 /*app.get('/incomingOrder', function(req, res) {
