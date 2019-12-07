@@ -38,11 +38,17 @@ app.post('/incomingOrder', function(req, res) {
   var item = req.body.item;
   var quantity = req.body.quantity;
   var price = req.body.price;
-  fs.appendFile("orders/adminorders.txt", item + " #" + quantity + " $" + price, (err) => {
+  fs.appendFile("orders/adminorders.txt", item + " " + quantity + " " + price + "\n", (err) => {
     if(err) throw err;
 
     console.log("Order saved!");
-  });
+  }); 
+
+  /*fs.appendFile("orders/adminorders.txt", item + " #" + quantity + " $" + price, (err) => {
+    if(err) throw err;
+
+    console.log("Order saved!");
+  }); */
 
   res.send(item + ' ' + quantity + ' ' + price);
 }); 

@@ -1,1 +1,4 @@
-dark_ceramic #7 $15ceramic #8 $15dark_ceramic #9 $15
+paper 7 10
+steel_forks 5 2
+trashbags 15 15
+sauce_pan 3 15
