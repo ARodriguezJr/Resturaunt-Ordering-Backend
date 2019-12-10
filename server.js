@@ -27,6 +27,7 @@ app.use("/js", express.static(__dirname + "/js"));
 app.use("/node_modules", express.static(__dirname + "/js"));
 app.use("/static", express.static(__dirname + "/static"));
 app.use("/orders", express.static(__dirname + "/orders"));
+app.use("/submittedOrders", express.static(__dirname + "/submittedOrders"));
 
 app.set("view engine", "pug");
 
@@ -44,15 +45,48 @@ app.post('/incomingOrder', function(req, res) {
     console.log("Order saved!");
   }); 
 
-  /*fs.appendFile("orders/adminorders.txt", item + " #" + quantity + " $" + price, (err) => {
-    if(err) throw err;
-
-    console.log("Order saved!");
-  }); */
-
-  res.send(item + ' ' + quantity + ' ' + price);
+  res.send(quantity + " Orders of: " + item);
 }); 
 
+
+app.post('/incomingFinalOrder', function(req, res) {
+  function clearOrder(){
+    fs.writeFile('orders/adminorders.txt', "", (err) => {
+      if (err) throw err;
+    })
+  }
+  fs.readFile('orders/adminorders.txt', (err, readData) => {
+    if (err) throw err;
+    console.log(readData.toString());
+
+    // Write order to final order file
+    fs.writeFileSync('submittedOrders/finalAdminOrder.txt', readData, clearOrder());
+    })
+  
+
+  // Erase order from temporary order file
+  
+  res.send('Order submitted')
+  
+})
+
+app.post('/incomingClearOrder', function(req, res) {
+  // Clear adminorder.txt
+  fs.writeFile('orders/adminorders.txt', "", (err) => {
+    if (err) throw err;
+  })
+
+  res.send('Cart Cleared')
+})
+
+app.post('/incomingCancelOrder', function(req, res) {
+  // Clear finaladminorder.txt
+  fs.writeFile('submittedOrders/finalAdminOrder.txt', "", (err) => {
+    if (err) throw err;
+  })
+
+  res.send('Order Cancelled ')
+})
 /*app.get('/incomingOrder', function(req, res) {
   var item = req.param('item');
   var quantity = req.param('quantity');

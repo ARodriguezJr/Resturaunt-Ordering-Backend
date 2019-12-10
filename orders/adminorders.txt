@@ -1,4 +1,1 @@
-paper 7 10
-steel_forks 5 2
-trashbags 15 15
-sauce_pan 3 15
+gloves 7 12
